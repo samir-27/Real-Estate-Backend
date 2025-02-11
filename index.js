@@ -10,8 +10,10 @@ app.use(cors());
 app.use(express.json())
 
  const authRoutes = require("./routes/AuthRoutes") 
+ const propertyRoutes = require("./routes/PropertyRoutes")
 
 app.use("/api/v1",authRoutes);
+app.use("/api/v1",propertyRoutes)
 
 app.listen(PORT,()=>{
     console.log(`app is listening on port ${PORT}`)
