@@ -18,6 +18,15 @@ const BuyerSchema = new mongoose.Schema({
         type:String,
         default:"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
     },
+    pinCode:{
+        type:String
+    },
+    city:{
+        type:String
+    },
+    state: {
+        type:String
+    },
     createdAt: { type: Date, default: Date.now }
 })
 

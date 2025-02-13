@@ -3,7 +3,7 @@ const { createProperty, updateProperty, getAllProperties, deleteProperty, getOne
 const router = express.Router();
 
 router.post("/property/create",createProperty);
-router.post("/property/update",updateProperty);
+router.put("/property/update/:id",updateProperty);
 router.get("/property/getallproperties",getAllProperties);
 router.get("/property/getone/:id",getOnePropertyDetail);
 router.delete("/property/deleteproperty",deleteProperty);

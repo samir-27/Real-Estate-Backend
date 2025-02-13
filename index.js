@@ -11,9 +11,11 @@ app.use(express.json())
 
  const authRoutes = require("./routes/AuthRoutes") 
  const propertyRoutes = require("./routes/PropertyRoutes")
+ const buyerRoutes = require("./routes/BuyerRoutes")
 
 app.use("/api/v1",authRoutes);
 app.use("/api/v1",propertyRoutes)
+app.use("/api/v1",buyerRoutes)
 
 app.listen(PORT,()=>{
     console.log(`app is listening on port ${PORT}`)
