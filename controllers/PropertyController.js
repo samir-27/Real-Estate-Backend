@@ -37,6 +37,19 @@ exports.updateProperty = async (req, res) => {
   }
 };
 
+exports.getOnePropertyDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const property = await Property.findById(id);
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
+    res.status(200).json(property);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Delete a property by ID
 exports.deleteProperty = async (req, res) => {
   try {
