@@ -1,4 +1,5 @@
 const Buyer = require("../models/BuyerModel");
+const bcrypt = require("bcryptjs");
 const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
@@ -30,6 +31,32 @@ const updateBuyer = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+const updatePassword = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    const buyer = await Buyer.findById(id);
+    if (!buyer) {
+      return res.status(404).json({ message: "Buyer not found" });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, buyer.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Current password is incorrect" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    buyer.password = await bcrypt.hash(newPassword, salt);
+    await buyer.save();
+
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Delete Buyer
 const deleteBuyer = async (req, res) => {
   try {
@@ -42,4 +69,4 @@ const deleteBuyer = async (req, res) => {
   }
 };
 
-module.exports = { getBuyerById, updateBuyer, deleteBuyer };
+module.exports = { getBuyerById, updateBuyer, updatePassword, deleteBuyer };
