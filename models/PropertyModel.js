@@ -66,5 +66,7 @@ const propertySchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  createdAt: {type: Date, default: Date.now},
+  updatedAt: {type: Date, default: Date.now}
 });
 module.exports = mongoose.model("Property", propertySchema);

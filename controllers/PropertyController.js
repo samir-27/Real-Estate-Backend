@@ -3,12 +3,10 @@ const Property = require("../models/PropertyModel");
 // Create a new property
 exports.createProperty = async (req, res) => {
   try {
-    console.log("Received Data:", req.body); // Debugging step
-    console.log("User ID:", req.user?.id);   // Check if user ID exists
-
+    // console.log("Received Data:", req.body); 
+    // console.log("User ID:", req.user?.id);   
     const { title, description, price, address, city, state, zipCode, country, images, propertyType, bedrooms, bathrooms, area } = req.body;
 
-    // Validate required fields
     if (!title || !description || !price || !address || !city || !state || !zipCode || !country || !propertyType) {
       return res.status(400).json({ message: "All required fields must be provided" });
     }
@@ -27,7 +25,7 @@ exports.createProperty = async (req, res) => {
       bedrooms,
       bathrooms,
       area,
-      createdBy: req.user.id, // Extracted from authenticated user
+      createdBy: req.user.id,
     });
 
     await newProperty.save();
@@ -38,6 +36,17 @@ exports.createProperty = async (req, res) => {
   }
 };
 
+exports.getMyProperties = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const properties = await Property.find({ createdBy: userId });
+    
+    res.status(200).json(properties);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // Get all properties
 exports.getAllProperties = async (req, res) => {
