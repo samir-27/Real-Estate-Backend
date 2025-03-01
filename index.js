@@ -20,11 +20,12 @@ app.use(express.urlencoded({ extended: true }));
  const propertyRoutes = require("./routes/PropertyRoutes")
  const buyerRoutes = require("./routes/BuyerRoutes")
  const sellerRoutes = require("./routes/SellerRoutes")   
+ const applyPropertyRoutes = require("./routes/ApplyPropertyRoute")
 app.use("/api/v1",authRoutes);
 app.use("/api/v1",propertyRoutes)
 app.use("/api/v1",buyerRoutes)
 app.use("/api/v1",sellerRoutes)
-
+app.use("/api/v1",applyPropertyRoutes)
 app.listen(PORT,()=>{
     console.log(`app is listening on port ${PORT}`)
 })
