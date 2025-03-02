@@ -61,6 +61,7 @@ const propertySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  applications: [{ type: mongoose.Schema.Types.ObjectId, ref: "ApplyProperty", default: [] }],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
