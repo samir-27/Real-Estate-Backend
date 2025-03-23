@@ -4,6 +4,15 @@ const cloudinary = require("cloudinary").v2;
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
+const getAllSellers = async (req, res) => {
+  try {
+    const sellers = await Seller.find();
+    res.status(200).json(sellers);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+};
+
 // Get Seller by ID
 const getSellerById = async (req, res) => {
   try {
@@ -72,4 +81,4 @@ const deleteSeller = async (req, res) => {
   }
 };
 
-module.exports = { getSellerById, updateSeller, SellerUpdatePassword, deleteSeller };
+module.exports = { getAllSellers,getSellerById, updateSeller, SellerUpdatePassword, deleteSeller };

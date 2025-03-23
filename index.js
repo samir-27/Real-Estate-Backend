@@ -21,14 +21,17 @@ app.use(express.urlencoded({ extended: true }));
  const buyerRoutes = require("./routes/BuyerRoutes")
  const sellerRoutes = require("./routes/SellerRoutes")   
  const applyPropertyRoutes = require("./routes/ApplyPropertyRoute")
+ const adminRoutes = require('./routes/AdminRoutes')
 app.use("/api/v1",authRoutes);
 app.use("/api/v1",propertyRoutes)
 app.use("/api/v1",buyerRoutes)
 app.use("/api/v1",sellerRoutes)
 app.use("/api/v1",applyPropertyRoutes)
+app.use("/api/v1",adminRoutes)
 app.listen(PORT,()=>{
     console.log(`app is listening on port ${PORT}`)
 })
 
-const dbConnect = require("./db")
+const dbConnect = require("./db");
+const { adminLogin } = require("./controllers/AdminController");
 dbConnect();
