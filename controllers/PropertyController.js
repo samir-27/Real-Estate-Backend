@@ -1,14 +1,21 @@
 const Property = require("../models/PropertyModel");
-
+const cloudinary = require("../cloudinaryConfig");
 // Create a new property
 exports.createProperty = async (req, res) => {
   try {
-    // console.log("Received Data:", req.body); 
-    // console.log("User ID:", req.user?.id);   
-    const { title, description, price, address, city, state, zipCode, country, images, propertyType, bedrooms, bathrooms, area } = req.body;
+    const { title, description, price, address, city, state, zipCode, country, propertyType, bedrooms, bathrooms, area } = req.body;
 
     if (!title || !description || !price || !address || !city || !state || !zipCode || !country || !propertyType) {
       return res.status(400).json({ message: "All required fields must be provided" });
+    }
+
+    let imageUrls = [];
+
+    if (req.files) {
+      for (const file of req.files) {
+        const result = await cloudinary.uploader.upload(file.path, { folder: "properties" });
+        imageUrls.push(result.secure_url);
+      }
     }
 
     const newProperty = new Property({
@@ -20,18 +27,18 @@ exports.createProperty = async (req, res) => {
       state,
       zipCode,
       country,
-      images,
       propertyType,
       bedrooms,
       bathrooms,
       area,
+      images: imageUrls,
       createdBy: req.user.id,
     });
 
     await newProperty.save();
     res.status(201).json(newProperty);
   } catch (error) {
-    console.error("Error creating property:", error); // Log error details
+    console.error("Error creating property:", error);
     res.status(500).json({ message: error.message });
   }
 };
