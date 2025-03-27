@@ -12,14 +12,17 @@ const BuyerSchema = new mongoose.Schema({
         type:String
     },
     phone:{
-        type:String
+        type:String,
+        minlength:10,
+        maxlength:10
     },
     profileImage:{
         type:String,
         default:"https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
     },
     pinCode:{
-        type:String
+        type:String,
+        length:6
     },
     city:{
         type:String

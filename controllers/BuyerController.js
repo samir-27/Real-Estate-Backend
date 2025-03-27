@@ -28,7 +28,9 @@ const getBuyerById = async (req, res) => {
 
 // Update Buyer
 const updateBuyer = async (req, res) => {
+
     try {
+      console.log(req.body);
         const { id } = req.params;
         const updatedBuyer = await Buyer.findByIdAndUpdate(id, req.body, {
           new: true,
@@ -44,6 +46,7 @@ const updateBuyer = async (req, res) => {
 
 const updatePassword = async (req, res) => {
   try {
+    console.log(req.body);
     const { id } = req.params;
     const { currentPassword, newPassword } = req.body;
 
@@ -62,9 +65,11 @@ const updatePassword = async (req, res) => {
     await buyer.save();
 
     res.status(200).json({ message: "Password updated successfully" });
-  } catch (error) {
+  }catch (error) {
+    console.error("Error updating password:", error);
     res.status(500).json({ error: error.message });
   }
+  
 };
 
 // Delete Buyer
